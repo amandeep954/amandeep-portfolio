@@ -2,7 +2,8 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
 export default defineConfig({
-  base: "/",
+  // Use relative paths so the built site can be served from any base URL
+  base: "./",
   plugins: [react()],
   server: {
     proxy: {
