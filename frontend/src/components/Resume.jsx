@@ -10,8 +10,8 @@ function Resume() {
             Resume Details
           </div>
           <p className="text-muted text-[.9rem] leading-[1.8] max-w-[680px]">
-            Education, certification, languages, and technical stack taken
-            from the resume.
+            Education, certification, languages, and technical stack taken from
+            the resume.
           </p>
         </div>
         <div className="grid gap-5 lg:grid-cols-3">

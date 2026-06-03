@@ -1,6 +1,7 @@
 export const assetUrl = (path) => {
   const cleanPath = path.replace(/^\/+/, "");
-  const base = import.meta.env.BASE_URL === "./" ? "/" : import.meta.env.BASE_URL;
+  const base =
+    import.meta.env.BASE_URL === "./" ? "/" : import.meta.env.BASE_URL;
   const normalizedBase = base.endsWith("/") ? base : `${base}/`;
 
   return `${normalizedBase}${cleanPath}`;
@@ -52,6 +53,15 @@ export const services = [
 
 export const projects = [
   {
+    name: "PackagingBazaar",
+    subtitle: "Packaging Products Marketplace",
+    tags: ["React", "Tailwind CSS", "E-commerce", "UI/UX", "Responsive"],
+    desc: "Created a polished packaging marketplace with product browsing, category navigation, and responsive layouts for seamless buyer engagement.",
+    image: assetUrl("images/projects/packagingbazaar.png"),
+    liveLink: "https://packagingbazaar.co.in/",
+    githubLink: "https://github.com/amandeep954/PackagingBazaar",
+  },
+  {
     name: "Airbnb Clone",
     subtitle: "Full-Stack Web Application",
     tags: ["MongoDB", "Express.js", "Node.js", "EJS", "MVC", "Authentication"],
@@ -77,6 +87,15 @@ export const projects = [
     image: assetUrl("images/projects/zerodha-clone.png"),
     liveLink: "https://zerodha-frontend-gfs1.onrender.com/",
     githubLink: "https://github.com/amandeep954/amandeep954-zerodha-clone",
+  },
+  {
+    name: "TaskFlow",
+    subtitle: "Task Management Dashboard",
+    tags: ["React", "Tailwind CSS", "Node.js", "Express", "MongoDB", "JWT"],
+    desc: "Launched a secure task management dashboard with user authentication, responsive workflows, CRUD task boards, and polished UI for organizing work and tracking progress.",
+    image: assetUrl("images/projects/TaskFlow.png"),
+    liveLink: "https://taskflow-client-0400.onrender.com/",
+    githubLink: "https://github.com/amandeep954/taskflow",
   },
 ];
 
