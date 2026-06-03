@@ -8,6 +8,7 @@ import Resume from "./components/Resume";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import ThemeToggle from "./components/ThemeToggle";
+import { projects, skills } from "./constants/portfolioData";
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -65,8 +66,8 @@ function App() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            animCount("cnt1", 3);
-            animCount("cnt2", 13);
+            animCount("cnt1", projects.length);
+            animCount("cnt2", skills.length);
             animCount("cnt3", 1);
             statsObserver.disconnect();
           }
