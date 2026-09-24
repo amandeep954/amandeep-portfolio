@@ -1,7 +1,9 @@
 import React from "react";
-import { RESUME_URL } from "../constants/portfolioData";
+import { useAuth } from "../context/AuthContext";
 
 function Footer() {
+  const { resumeUrl, emailText } = useAuth();
+
   return (
     <footer className="bg-bg2 border-t border-[var(--border)] py-10 px-[6%] text-center">
       <div className="ft-name text-[1.1rem] font-[800] mb-1">
@@ -12,7 +14,7 @@ function Footer() {
       </div>
       <div className="ft-socials flex justify-center gap-3 mb-3">
         <a
-          href="mailto:amandeep954h@gmail.com"
+          href={`mailto:${emailText || "amandeep954h@gmail.com"}`}
           aria-label="Email"
           className="s-btn w-9 h-9 bg-card border border-[var(--border)] rounded-[8px] inline-flex items-center justify-center text-coral hover:border-coral"
         >
@@ -73,7 +75,7 @@ function Footer() {
           </svg>
         </a>
         <a
-          href={RESUME_URL}
+          href={resumeUrl}
           target="_blank"
           rel="noreferrer"
           aria-label="Resume"

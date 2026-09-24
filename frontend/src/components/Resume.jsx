@@ -1,7 +1,11 @@
 import React from "react";
-import { education, skills, languages } from "../constants/portfolioData";
+import { education, languages } from "../constants/portfolioData";
+import { useAuth } from "../context/AuthContext";
 
 function Resume() {
+  const { skillsList } = useAuth();
+  const activeSkills = Array.isArray(skillsList) ? skillsList : [];
+
   return (
     <section id="credentials" className="py-20 px-[6%] bg-bg2">
       <div className="max-w-[1200px] mx-auto">
@@ -55,14 +59,23 @@ function Resume() {
               Skills & Languages
             </div>
             <div className="flex flex-wrap gap-2 mb-5">
-              {skills.map((skill) => (
-                <span
-                  key={skill}
-                  className="bg-bg3 border border-[var(--border)] text-muted text-[.73rem] px-2 py-1 rounded-full"
-                >
-                  {skill}
+              {activeSkills.length === 0 ? (
+                <span className="text-amber-400/80 text-[.75rem] font-mono italic bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full">
+                  ⚠️ Backend Offline (Connect to load live DB skills)
                 </span>
-              ))}
+              ) : (
+                activeSkills.map((sk) => {
+                  const name = typeof sk === "string" ? sk : sk.name;
+                  return (
+                    <span
+                      key={sk.id || name}
+                      className="bg-bg3 border border-[var(--border)] text-muted text-[.73rem] px-2 py-1 rounded-full"
+                    >
+                      {name}
+                    </span>
+                  );
+                })
+              )}
             </div>
             <div className="grid gap-2">
               {languages.map((language) => (

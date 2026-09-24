@@ -8,10 +8,16 @@ import Resume from "./components/Resume";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import ThemeToggle from "./components/ThemeToggle";
-import { projects, skills } from "./constants/portfolioData";
+import LoginModal from "./components/Admin/LoginModal";
+import AdminDashboardModal from "./components/Admin/AdminDashboardModal";
+import BackendStatusBanner from "./components/BackendStatusBanner";
+import { AuthProvider, useAuth } from "./context/AuthContext";
+import { fetchProjects } from "./services/api";
 
-function App() {
+function AppContent() {
+  const { skillsList } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [projectsList, setProjectsList] = useState([]);
   const [theme, setTheme] = useState(() => {
     try {
       const saved = localStorage.getItem("theme");
@@ -24,6 +30,11 @@ function App() {
       return "dark";
     }
   });
+
+  const handleProjectsUpdated = async () => {
+    const data = await fetchProjects();
+    setProjectsList(data);
+  };
 
   useEffect(() => {
     const root = document.documentElement;
@@ -66,8 +77,8 @@ function App() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            animCount("cnt1", projects.length);
-            animCount("cnt2", skills.length);
+            animCount("cnt1", projectsList.length || 5);
+            animCount("cnt2", skillsList.length || 10);
             animCount("cnt3", 1);
             statsObserver.disconnect();
           }
@@ -102,16 +113,27 @@ function App() {
 
   return (
     <>
+      <BackendStatusBanner />
       <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       <Hero />
       <Marquee />
       <About />
-      <Projects />
+      <Projects projectsList={projectsList} setProjectsList={setProjectsList} />
       <Resume />
       <Contact />
       <Footer />
       <ThemeToggle theme={theme} setTheme={setTheme} />
+      <LoginModal />
+      <AdminDashboardModal onProjectsUpdated={handleProjectsUpdated} />
     </>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 

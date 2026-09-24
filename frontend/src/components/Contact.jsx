@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import api from "../services/api";
-import { RESUME_URL } from "../constants/portfolioData";
+import { sendContactMessage } from "../services/api";
+import { useAuth } from "../context/AuthContext";
 
 function Contact() {
+  const { resumeUrl, locationText, emailText, phoneText } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [notification, setNotification] = useState({
     show: false,
@@ -33,7 +34,7 @@ function Contact() {
     setIsSubmitting(true);
 
     try {
-      await api.post("", data);
+      await sendContactMessage(data);
       form.reset();
       setNotification({
         show: true,
@@ -62,6 +63,8 @@ function Contact() {
     }
   };
 
+  const cleanPhoneNum = (phoneText || "9548690146").replace(/[^0-9]/g, "");
+
   return (
     <section id="contact" className="py-20 px-[6%] bg-bg">
       <div className="contact-wrap max-w-[1200px] mx-auto grid lg:grid-cols-[1fr_1.2fr] gap-20 items-start">
@@ -80,7 +83,7 @@ function Contact() {
           </p>
           <div className="contact-links flex flex-col gap-3 mt-6">
             <a
-              href="mailto:amandeep954h@gmail.com"
+              href={`mailto:${emailText || "amandeep954h@gmail.com"}`}
               className="c-link flex items-center gap-3 text-muted text-[.88rem] no-underline hover:text-text transition-colors duration-200"
             >
               <div className="c-icon w-9 h-9 bg-card border border-[var(--border)] rounded-[8px] flex items-center justify-center text-coral">
@@ -98,10 +101,10 @@ function Contact() {
                   <polyline points="22,6 12,13 2,6" />
                 </svg>
               </div>
-              amandeep954h@gmail.com
+              {emailText || "amandeep954h@gmail.com"}
             </a>
             <a
-              href="https://wa.me/919548690146?text=Hello%20Aman%2C%20I%20visited%20your%20portfolio%20website%20and%20would%20like%20to%20hire%20you%20for%20a%20project."
+              href={`https://wa.me/${cleanPhoneNum}?text=Hello%20Aman%2C%20I%20visited%20your%20portfolio%20website%20and%20would%20like%20to%20hire%20you%20for%20a%20project.`}
               target="_blank"
               rel="noreferrer"
               className="c-link flex items-center gap-3 text-muted text-[.88rem] no-underline hover:text-text transition-colors duration-200"
@@ -120,7 +123,7 @@ function Contact() {
                   <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
                 </svg>
               </div>
-              +91 9548690146
+              {phoneText || "+91 9548690146"}
             </a>
             <div className="c-link flex items-center gap-3 text-muted text-[.88rem]">
               <div className="c-icon w-9 h-9 bg-card border border-[var(--border)] rounded-[8px] flex items-center justify-center text-coral">
@@ -138,10 +141,10 @@ function Contact() {
                   <circle cx="12" cy="10" r="3" />
                 </svg>
               </div>
-              Ghaziabad, Uttar Pradesh
+              {locationText || "Ghaziabad, Uttar Pradesh"}
             </div>
             <a
-              href={RESUME_URL}
+              href={resumeUrl}
               target="_blank"
               rel="noreferrer"
               className="c-link flex items-center gap-3 text-muted text-[.88rem] no-underline hover:text-text transition-colors duration-200"
